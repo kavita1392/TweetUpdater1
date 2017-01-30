@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+ 
+ <html>
+ <head>
+ <title>PHP MySQL Insert Tutorial</title>
+ 
+ <style>
+table, td {
+    border: 1px solid black;
+}
+</style>
+ 
+ <script src='https://code.jquery.com/jquery-2.1.3.min.js'></script>
+	<script type="text/javascript">
+
+		function clearTable($tableName){
+		   var table = document.getElementById($tableName);
+		   table.innerHTML = "";
+		}
+	
+        function go(){
+			var hashtag = $("#hashtag").val();
+		
+			var form = document.getElementById("form");
+			form.style.display = "none";
+			
+			setInterval(function(){
+				
+				var table = document.getElementById("myTable");
+				clearTable("myTable");
+			    $.ajax({      
+					type: "GET",
+				    url: "http://localhost/TweetAccesor.php?hashtag=" + hashtag,					
+					dataType: "json",
+					success: function(data) {
+						for (var i = 0; i < data.length; i++){
+							var row = table.insertRow(0);
+							var cell1 = row.insertCell(0);
+							cell1.innerHTML = data[i];
+						}
+						
+					},
+					error: function(jqxhr,textStatus,errorThrown)
+                    {
+					
+						document.write("ERROR: " + errorThrown);
+					}
+			    });
+			}, 1000);
+			
+        }        
+	</script>
+ </head>
+ 
+ <body> 
+ <form id = "form">
+     <input type = "text" id = "hashtag" value = "">
+     <input type = "button" value= "Submit" onclick = "go()">
+ </form> 
+ 
+ <table id= "myTable" >
+ </table>
+<br>
+ </body>
+ 
+ </html>
+ 
+ 
+ 
